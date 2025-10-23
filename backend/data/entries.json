@@ -1,26 +1,12 @@
 [
   {
-    "timestamp": "2025-10-23T00:22:03.707808",
-    "texto_entrada": "le he hecho una fiesta sorpresa por su cumple",
-    "pilar_detectado": "Compromiso",
+    "timestamp": "2025-10-23T03:33:41.581966",
+    "texto_entrada": "hable con mi novia para que salgamos mas y nos tomemos mas fotos",
+    "pilar_detectado": "Intimidad",
     "magnitud_impacto": "positiva_media",
-    "insight_arquitecto": "He registrado tu aporte. Cada experiencia, buena o mala, es parte de la construcción de tu relación.",
-    "accion_visual_sugerida": "construir_techo"
-  },
-  {
-    "timestamp": "2025-10-23T00:26:45.944096",
-    "texto_entrada": "le hice el amor con mucho cariño",
-    "pilar_detectado": "Compromiso",
-    "magnitud_impacto": "positiva_media",
-    "insight_arquitecto": "He registrado tu aporte. Cada experiencia, buena o mala, es parte de la construcción de tu relación.",
-    "accion_visual_sugerida": "construir_techo"
-  },
-  {
-    "timestamp": "2025-10-23T01:46:15.626274",
-    "texto_entrada": "hable con ella de lo que me molestada de su amigo gay que se  sabe la plantilla entera de la brasil 2002",
-    "pilar_detectado": "Compromiso",
-    "magnitud_impacto": "positiva_media",
-    "insight_arquitecto": "He registrado tu aporte. Cada experiencia, buena o mala, es parte de la construcción de tu relación.",
-    "accion_visual_sugerida": "construir_techo"
+    "es_constructivo": true,
+    "insight_arquitecto": "Han encendido una luz cálida que ilumina los rincones más personales de su relación.",
+    "consejo_profesional": "La intimidad va más allá de lo físico; incluye vulnerabilidad emocional compartida. Dediquen tiempo a conexiones cotidianas significativas. A veces una mirada sincera vale más que grandes gestos.",
+    "accion_visual_sugerida": "añadir_luz"
   }
 ]

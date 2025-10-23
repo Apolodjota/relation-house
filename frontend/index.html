@@ -476,15 +476,15 @@
       position: fixed;
       top: 140px;
       right: 20px;
-      background: rgba(255, 215, 0, 0.95);
+      background: rgba(255, 255, 255, 0.98);
       color: #333;
-      padding: 20px 24px;
-      border-radius: 8px;
-      border: 3px solid #333;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
-      max-width: 400px;
+      padding: 24px;
+      border-radius: 12px;
+      border: 4px solid #5d4e37;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+      max-width: 500px;
       z-index: 2000;
-      animation: slideInRight 0.4s ease;
+      animation: slideInRight 0.5s ease;
       display: none;
     }
 
@@ -494,7 +494,7 @@
 
     @keyframes slideInRight {
       from {
-        transform: translateX(100%);
+        transform: translateX(120%);
         opacity: 0;
       }
       to {
@@ -503,17 +503,70 @@
       }
     }
 
+    .notification-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 3px solid #5d4e37;
+    }
+
     .notification-title {
       font-weight: bold;
-      margin-bottom: 8px;
-      font-size: 1.1em;
+      font-size: 1.2em;
       display: flex;
       align-items: center;
       gap: 8px;
+      color: #5d4e37;
     }
 
-    .notification-text {
-      line-height: 1.5;
+    .notification-close {
+      background: #d32f2f;
+      color: white;
+      border: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .notification-close:hover {
+      background: #b71c1c;
+      transform: scale(1.1);
+    }
+
+    .notification-insight {
+      background: #fff8dc;
+      padding: 12px;
+      border-radius: 8px;
+      border-left: 4px solid #ffd700;
+      margin-bottom: 16px;
+      font-style: italic;
+      color: #555;
+    }
+
+    .notification-advice {
+      background: #f0f8ff;
+      padding: 16px;
+      border-radius: 8px;
+      border-left: 4px solid #5d4e37;
+      line-height: 1.7;
+      color: #333;
+    }
+
+    .notification-advice-label {
+      font-weight: bold;
+      color: #5d4e37;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     /* ===================== LOADING ===================== */
@@ -550,7 +603,7 @@
   <div class="top-banner">
     <div class="banner-content">
       <h1>🏗️ RelatioConstruct</h1>
-      <p>Bienvenido a la obra de tu relación. Habla con el arquitecto para registrar tus interacciones y ayudarte con la obra.</p>
+      <p>Bienvenido a la obra de tu relación. Habla con "El Arquitecto" para registrar tus avances.</p>
     </div>
   </div>
 
@@ -620,8 +673,7 @@
           </label>
           <textarea 
             id="entryText" 
-            placeholder="Escribe libremente sobre un momento, una conversación, una decisión, un conflicto... 
-            El arquitecto identificará qué está pasando y te ayudará con un consejo o una jalada de orejas."
+            placeholder="Escribe libremente sobre un momento, una conversación, una decisión, un conflicto... El Arquitecto identificará automáticamente qué pilar de tu relación está siendo afectado."
             required
           ></textarea>
           <button type="submit" class="submit-btn" id="submitBtn">
@@ -654,11 +706,21 @@
 
   <!-- NOTIFICACIÓN -->
   <div class="notification" id="notification">
-    <div class="notification-title">
-      <span>👷</span>
-      <span>Nota del Arquitecto</span>
+    <div class="notification-header">
+      <div class="notification-title">
+        <span>👷</span>
+        <span>El Arquitecto</span>
+      </div>
+      <button class="notification-close" id="notificationClose">&times;</button>
     </div>
-    <div class="notification-text" id="notificationText"></div>
+    <div class="notification-insight" id="notificationInsight"></div>
+    <div class="notification-advice">
+      <div class="notification-advice-label">
+        <span>💡</span>
+        <span>Consejo Profesional:</span>
+      </div>
+      <div id="notificationAdvice"></div>
+    </div>
   </div>
 
   <script>
@@ -889,6 +951,11 @@
         });
       });
 
+      // Cerrar notificación
+      document.getElementById('notificationClose').addEventListener('click', () => {
+        document.getElementById('notification').classList.remove('show');
+      });
+
       // Manejar envío del formulario
       document.getElementById('entryForm').addEventListener('submit', handleSubmit);
     }
@@ -928,12 +995,19 @@
         }
 
         const data = await response.json();
+        console.log("Respuesta recibida:", data); // Depuración
 
-        // Actualizar la casa visualmente
-        updateHouseVisual(data.accion_visual_sugerida);
+        // Asegurar que es_constructivo sea un booleano
+        let esConstructivo = data.es_constructivo;
+        if (typeof esConstructivo === 'string') {
+          esConstructivo = esConstructivo.toLowerCase() === 'true';
+        }
 
-        // Mostrar notificación
-        showNotification(data.insight_arquitecto);
+        // Actualizar la casa visualmente - pasando ambos parámetros
+        updateHouseVisual(data.accion_visual_sugerida, esConstructivo);
+
+        // Mostrar notificación con insight Y consejo
+        showNotification(data.insight_arquitecto, data.consejo_profesional);
 
         // Incrementar contador
         totalEntries++;
@@ -957,43 +1031,59 @@
     // ==========================================
     // ACTUALIZACIÓN VISUAL
     // ==========================================
-    function updateHouseVisual(accion) {
-      const accionesPositivas = [
-        'construir_cimiento',
-        'construir_pared',
-        'construir_techo',
-        'pintar_pared',
-        'añadir_ventana',
-        'plantar_flor',
-        'añadir_luz',
-        'expandir_casa'
-      ];
+    function updateHouseVisual(accion, es_constructivo) {
+      console.log("Actualizando casa:", { accion, es_constructivo });
 
-      if (accionesPositivas.includes(accion)) {
-        // Subir nivel (máximo 6)
+      // Si no se proporciona es_constructivo, inferirlo de la acción
+      if (es_constructivo === undefined) {
+        // Acciones positivas/constructivas
+        const accionesPositivas = [
+          'construir_cimiento', 'construir_pared', 'construir_techo', 
+          'pintar_pared', 'añadir_ventana', 'plantar_flor', 
+          'añadir_luz', 'expandir_casa'
+        ];
+        es_constructivo = accionesPositivas.includes(accion);
+      }
+      
+      // Convertir es_constructivo a booleano si es string
+      if (typeof es_constructivo === 'string') {
+        es_constructivo = es_constructivo.toLowerCase() === 'true';
+      }
+
+      console.log("Valor final es_constructivo:", es_constructivo);
+      
+      // Si es constructivo, AVANZA la construcción
+      if (es_constructivo === true) {
+        console.log("Avanzando nivel de casa");
         if (currentLevel < houseStates.length - 1) {
           transitionHouseLevel(currentLevel + 1);
         }
-      } else {
-        // Acciones negativas: no cambiamos nivel visual aquí
-        // En una versión completa, superpondrías elementos de daño
-        console.log('Acción negativa detectada:', accion);
+      } 
+      // Si NO es constructivo, RETROCEDE la construcción
+      else {
+        console.log("Retrocediendo nivel de casa");
+        if (currentLevel > 0) {
+          transitionHouseLevel(currentLevel - 1);
+        }
       }
     }
 
     // ==========================================
     // NOTIFICACIONES
     // ==========================================
-    function showNotification(text) {
+    function showNotification(insight, advice) {
       const notification = document.getElementById('notification');
-      const notificationText = document.getElementById('notificationText');
+      const insightEl = document.getElementById('notificationInsight');
+      const adviceEl = document.getElementById('notificationAdvice');
       
-      notificationText.textContent = text;
+      insightEl.textContent = insight;
+      adviceEl.textContent = advice;
       notification.classList.add('show');
 
+      // Auto-cerrar después de 15 segundos (más tiempo porque ahora hay más texto)
       setTimeout(() => {
         notification.classList.remove('show');
-      }, 5000);
+      }, 15000);
     }
 
     // ==========================================
@@ -1084,9 +1174,14 @@
         <div class="architect-note">
           <div class="architect-note-label">
             <span>🏛️</span>
-            <span>El Arquitecto:</span>
+            <span>Insight del Arquitecto:</span>
           </div>
-          <div class="architect-note-text">${entry.insight_arquitecto}</div>
+          <div class="architect-note-text" style="margin-bottom: 12px;">${entry.insight_arquitecto}</div>
+          <div class="architect-note-label">
+            <span>💡</span>
+            <span>Consejo Profesional:</span>
+          </div>
+          <div class="architect-note-text">${entry.consejo_profesional || 'Sin consejo disponible.'}</div>
         </div>
       `;
 
