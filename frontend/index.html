@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RelatioConstruct - La Obra de Tu Relación</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(to bottom, #87ceeb 0%, #e0c097 60%, #8b7355 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ===================== VALLA SUPERIOR ===================== */
+    .top-banner {
+      background: repeating-linear-gradient(
+        45deg,
+        #ffd700,
+        #ffd700 20px,
+        #000 20px,
+        #000 40px
+      );
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      border-bottom: 6px solid #333;
+      position: relative;
+    }
+
+    .top-banner::before,
+    .top-banner::after {
+      content: '⚠️';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 2em;
+    }
+
+    .top-banner::before { left: 20px; }
+    .top-banner::after { right: 20px; }
+
+    .banner-content {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 16px 24px;
+      border-radius: 8px;
+      display: inline-block;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .banner-content h1 {
+      color: #d32f2f;
+      font-size: 2em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .banner-content p {
+      color: #333;
+      font-size: 1.1em;
+    }
+
+    /* ===================== CONTENEDOR PRINCIPAL ===================== */
+    .main-container {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 0;
+      min-height: calc(100vh - 120px);
+    }
+
+    /* ===================== TERRENO/OBRA ===================== */
+    .construction-site {
+      position: relative;
+      padding: 40px;
+      background: 
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 50px,
+          rgba(139, 115, 85, 0.1) 50px,
+          rgba(139, 115, 85, 0.1) 51px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          transparent,
+          transparent 50px,
+          rgba(139, 115, 85, 0.1) 50px,
+          rgba(139, 115, 85, 0.1) 51px
+        ),
+        #d4a574;
+    }
+
+    .construction-fence {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 120px;
+      background: repeating-linear-gradient(
+        90deg,
+        #654321,
+        #654321 8px,
+        transparent 8px,
+        transparent 16px
+      );
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    .house-container {
+      position: relative;
+      min-height: 500px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px;
+    }
+
+    .house-display {
+      width: 100%;
+      max-width: 600px;
+      height: 500px;
+      position: relative;
+      filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+    }
+
+    .house-state {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .house-state.active {
+      opacity: 1;
+    }
+
+    .house-level-badge {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 215, 0, 0.95);
+      color: #333;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-weight: bold;
+      font-size: 1.1em;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+      border: 3px solid #333;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* ===================== CASETA DEL ARQUITECTO ===================== */
+    .architect-cabin {
+      background: linear-gradient(135deg, #5d4e37 0%, #8b7355 100%);
+      border-left: 6px solid #333;
+      padding: 24px;
+      box-shadow: -4px 0 12px rgba(0,0,0,0.3);
+      position: relative;
+    }
+
+    .architect-cabin::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 8px;
+      background: repeating-linear-gradient(
+        90deg,
+        #ffd700,
+        #ffd700 10px,
+        #000 10px,
+        #000 20px
+      );
+    }
+
+    .cabin-header {
+      text-align: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 3px dashed rgba(255,255,255,0.3);
+    }
+
+    .cabin-header h2 {
+      color: #ffd700;
+      font-size: 1.5em;
+      margin-bottom: 8px;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    }
+
+    .architect-icon {
+      font-size: 4em;
+      margin-bottom: 12px;
+    }
+
+    .cabin-button {
+      width: 100%;
+      padding: 16px;
+      margin-bottom: 16px;
+      background: rgba(255, 255, 255, 0.95);
+      border: 3px solid #333;
+      border-radius: 8px;
+      font-size: 1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+
+    .cabin-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+      background: #ffd700;
+    }
+
+    .cabin-button:active {
+      transform: translateY(0);
+    }
+
+    .button-icon {
+      font-size: 1.8em;
+    }
+
+    .cabin-stats {
+      background: rgba(0,0,0,0.3);
+      padding: 16px;
+      border-radius: 8px;
+      margin-top: 24px;
+    }
+
+    .stat-item {
+      color: white;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95em;
+    }
+
+    .stat-label {
+      opacity: 0.8;
+    }
+
+    .stat-value {
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #ffd700;
+    }
+
+    /* ===================== MODALES ===================== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .modal {
+      background: white;
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      border: 4px solid #333;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 3px solid #333;
+    }
+
+    .modal-title {
+      font-size: 1.8em;
+      color: #333;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .close-btn {
+      background: #d32f2f;
+      color: white;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1.5em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .close-btn:hover {
+      background: #b71c1c;
+      transform: scale(1.1);
+    }
+
+    .modal-content textarea {
+      width: 100%;
+      min-height: 150px;
+      padding: 16px;
+      border: 3px solid #ddd;
+      border-radius: 8px;
+      font-size: 1em;
+      font-family: inherit;
+      resize: vertical;
+      margin-bottom: 16px;
+      transition: border-color 0.3s;
+    }
+
+    .modal-content textarea:focus {
+      outline: none;
+      border-color: #5d4e37;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 16px;
+      background: linear-gradient(135deg, #5d4e37 0%, #8b7355 100%);
+      color: white;
+      border: 3px solid #333;
+      border-radius: 8px;
+      font-size: 1.1em;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+    }
+
+    .submit-btn:disabled {
+      background: #999;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* ===================== HISTORIAL ===================== */
+    .history-entries {
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .history-entry {
+      background: #f5f5f5;
+      padding: 20px;
+      margin-bottom: 16px;
+      border-radius: 8px;
+      border-left: 6px solid #5d4e37;
+      animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .history-header {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px dashed #ddd;
+    }
+
+    .history-date {
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    .history-pillar {
+      background: #5d4e37;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font-weight: bold;
+      font-size: 0.9em;
+    }
+
+    .history-text {
+      color: #333;
+      margin-bottom: 12px;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    .architect-note {
+      background: white;
+      padding: 12px;
+      border-radius: 6px;
+      border-left: 4px solid #ffd700;
+    }
+
+    .architect-note-label {
+      font-weight: bold;
+      color: #5d4e37;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .architect-note-text {
+      color: #555;
+      line-height: 1.5;
+    }
+
+    .empty-history {
+      text-align: center;
+      padding: 60px 20px;
+      color: #999;
+      font-style: italic;
+    }
+
+    /* ===================== NOTIFICACIÓN ===================== */
+    .notification {
+      position: fixed;
+      top: 140px;
+      right: 20px;
+      background: rgba(255, 215, 0, 0.95);
+      color: #333;
+      padding: 20px 24px;
+      border-radius: 8px;
+      border: 3px solid #333;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+      max-width: 400px;
+      z-index: 2000;
+      animation: slideInRight 0.4s ease;
+      display: none;
+    }
+
+    .notification.show {
+      display: block;
+    }
+
+    @keyframes slideInRight {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    .notification-title {
+      font-weight: bold;
+      margin-bottom: 8px;
+      font-size: 1.1em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .notification-text {
+      line-height: 1.5;
+    }
+
+    /* ===================== LOADING ===================== */
+    .loading-spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-left: 8px;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* ===================== RESPONSIVE ===================== */
+    @media (max-width: 1024px) {
+      .main-container {
+        grid-template-columns: 1fr;
+      }
+      
+      .architect-cabin {
+        border-left: none;
+        border-top: 6px solid #333;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- VALLA SUPERIOR -->
+  <div class="top-banner">
+    <div class="banner-content">
+      <h1>🏗️ RelatioConstruct</h1>
+      <p>Bienvenido a la obra de tu relación. Habla con "El Arquitecto" para registrar tus avances.</p>
+    </div>
+  </div>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <div class="main-container">
+    <!-- TERRENO/OBRA -->
+    <div class="construction-site">
+      <div class="house-container">
+        <div class="house-display" id="houseDisplay">
+          <!-- Estados de la casa se insertan aquí -->
+        </div>
+        <div class="house-level-badge" id="houseLevelBadge">
+          🏗️ Nivel 0: Terreno Vacío
+        </div>
+      </div>
+      <div class="construction-fence"></div>
+    </div>
+
+    <!-- CASETA DEL ARQUITECTO -->
+    <div class="architect-cabin">
+      <div class="cabin-header">
+        <div class="architect-icon">👷</div>
+        <h2>Caseta del Arquitecto</h2>
+      </div>
+
+      <button class="cabin-button" id="talkToArchitectBtn">
+        <span class="button-icon">📋</span>
+        <span>Hablar con el Arquitecto</span>
+      </button>
+
+      <button class="cabin-button" id="viewHistoryBtn">
+        <span class="button-icon">📖</span>
+        <span>Ver Historial de Construcción</span>
+      </button>
+
+      <div class="cabin-stats">
+        <div class="stat-item">
+          <span class="stat-label">Nivel de Construcción:</span>
+          <span class="stat-value" id="statLevel">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Total de Aportes:</span>
+          <span class="stat-value" id="statEntries">0</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-label">Estado:</span>
+          <span class="stat-value" id="statStatus">En Construcción</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: DESPACHO DEL ARQUITECTO -->
+  <div class="modal-overlay" id="architectModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          <span>🏛️</span>
+          <span>Despacho del Arquitecto</span>
+        </h2>
+        <button class="close-btn" id="closeArchitectModal">&times;</button>
+      </div>
+      <div class="modal-content">
+        <form id="entryForm">
+          <label for="entryText" style="display: block; margin-bottom: 12px; font-weight: bold; color: #333;">
+            Cuéntame, ¿qué ha pasado en la obra hoy?
+          </label>
+          <textarea 
+            id="entryText" 
+            placeholder="Escribe libremente sobre un momento, una conversación, una decisión, un conflicto... El Arquitecto identificará automáticamente qué pilar de tu relación está siendo afectado."
+            required
+          ></textarea>
+          <button type="submit" class="submit-btn" id="submitBtn">
+            Registrar Aporte
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: LIBRO DE OBRA -->
+  <div class="modal-overlay" id="historyModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">
+          <span>📖</span>
+          <span>Libro de Obra</span>
+        </h2>
+        <button class="close-btn" id="closeHistoryModal">&times;</button>
+      </div>
+      <div class="modal-content">
+        <div class="history-entries" id="historyEntries">
+          <div class="empty-history">
+            El libro está vacío. Comienza a registrar tus aportes para ver tu historial de construcción.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOTIFICACIÓN -->
+  <div class="notification" id="notification">
+    <div class="notification-title">
+      <span>👷</span>
+      <span>Nota del Arquitecto</span>
+    </div>
+    <div class="notification-text" id="notificationText"></div>
+  </div>
+
+  <script>
+    // ==========================================
+    // CONFIGURACIÓN
+    // ==========================================
+    const API_URL = 'http://localhost:5000';
+
+    const houseStates = [
+      {
+        level: 0,
+        name: 'Terreno Vacío',
+        svg: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="180" y="220" fill="#8b7355"/>
+          <ellipse cx="200" cy="280" rx="100" ry="25" fill="#654321" opacity="0.4"/>
+          <text x="200" y="160" text-anchor="middle" font-size="28" fill="#666" font-weight="bold">🚧</text>
+          <text x="200" y="200" text-anchor="middle" font-size="20" fill="#666">PRÓXIMA OBRA</text>
+          <rect x="150" y="320" width="100" height="60" fill="#d4a574" stroke="#654321" stroke-width="2"/>
+          <text x="200" y="355" text-anchor="middle" font-size="14" fill="#333">TERRENO</text>
+        </svg>`
+      },
+      {
+        level: 1,
+        name: 'Cimientos',
+        svg: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="180" y="220" fill="#8b7355"/>
+          <rect x="80" y="260" width="240" height="60" fill="#555" stroke="#333" stroke-width="3"/>
+          <line x1="100" y1="260" x2="100" y2="320" stroke="#333" stroke-width="2"/>
+          <line x1="140" y1="260" x2="140" y2="320" stroke="#333" stroke-width="2"/>
+          <line x1="180" y1="260" x2="180" y2="320" stroke="#333" stroke-width="2"/>
+          <line x1="220" y1="260" x2="220" y2="320" stroke="#333" stroke-width="2"/>
+          <line x1="260" y1="260" x2="260" y2="320" stroke="#333" stroke-width="2"/>
+          <line x1="300" y1="260" x2="300" y2="320" stroke="#333" stroke-width="2"/>
+          <text x="200" y="240" text-anchor="middle" font-size="16" fill="#333" font-weight="bold">Cimientos Sólidos</text>
+        </svg>`
+      },
+      {
+        level: 2,
+        name: 'Estructura Básica',
+        svg: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="180" y="220" fill="#8b7355"/>
+          <rect x="80" y="260" width="240" height="60" fill="#555"/>
+          <rect x="80" y="140" width="240" height="120" fill="#999" stroke="#666" stroke-width="4"/>
+          <line x1="100" y1="140" x2="100" y2="260" stroke="#666" stroke-width="2"/>
+          <line x1="140" y1="140" x2="140" y2="260" stroke="#666" stroke-width="2"/>
+          <line x1="180" y1="140" x2="180" y2="260" stroke="#666" stroke-width="2"/>
+          <line x1="220" y1="140" x2="220" y2="260" stroke="#666" stroke-width="2"/>
+          <line x1="260" y1="140" x2="260" y2="260" stroke="#666" stroke-width="2"/>
+          <line x1="300" y1="140" x2="300" y2="260" stroke="#666" stroke-width="2"/>
+          <text x="200" y="120" text-anchor="middle" font-size="16" fill="#333" font-weight="bold">Paredes en Construcción</text>
+        </svg>`
+      },
+      {
+        level: 3,
+        name: 'Techo y Ventanas',
+        svg: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="180" y="220" fill="#8b7355"/>
+          <rect x="80" y="260" width="240" height="60" fill="#555"/>
+          <rect x="80" y="140" width="240" height="120" fill="#b8b8b8" stroke="#666" stroke-width="4"/>
+          <polygon points="80,140 200,80 320,140" fill="#8b4513" stroke="#5a2d0c" stroke-width="4"/>
+          <rect x="110" y="170" width="50" height="50" fill="#87ceeb" stroke="#333" stroke-width="3"/>
+          <rect x="240" y="170" width="50" height="50" fill="#87ceeb" stroke="#333" stroke-width="3"/>
+          <line x1="135" y1="170" x2="135" y2="220" stroke="#333" stroke-width="2"/>
+          <line x1="110" y1="195" x2="160" y2="195" stroke="#333" stroke-width="2"/>
+          <line x1="265" y1="170" x2="265" y2="220" stroke="#333" stroke-width="2"/>
+          <line x1="240" y1="195" x2="290" y2="195" stroke="#333" stroke-width="2"/>
+          <text x="200" y="60" text-anchor="middle" font-size="16" fill="#333" font-weight="bold">Casa Tomando Forma</text>
+        </svg>`
+      },
+      {
+        level: 4,
+        name: 'Casa con Color',
+        svg: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="180" y="220" fill="#90ee90"/>
+          <rect x="80" y="260" width="240" height="60" fill="#555"/>
+          <rect x="80" y="140" width="240" height="120" fill="#f5deb3" stroke="#666" stroke-width="4"/>
+          <polygon points="80,140 200,80 320,140" fill="#c41e3a" stroke="#8b0000" stroke-width="4"/>
+          <rect x="110" y="170" width="50" height="50" fill="#b0e0e6" stroke="#333" stroke-width="3"/>
+          <rect x="240" y="170" width="50" height="50" fill="#b0e0e6" stroke="#333" stroke-width="3"/>
+          <line x1="135" y1="170" x2="135" y2="220" stroke="#333" stroke-width="2"/>
+          <line x1="110" y1="195" x2="160" y2="195" stroke="#333" stroke-width="2"/>
+          <line x1="265" y1="170" x2="265" y2="220" stroke="#333" stroke-width="2"/>
+          <line x1="240" y1="195" x2="290" y2="195" stroke="#333" stroke-width="2"/>
+          <rect x="175" y="200" width="50" height="60" fill="#8b4513" stroke="#5a2d0c" stroke-width="3"/>
+          <circle cx="215" cy="230" r="4" fill="#ffd700"/>
+          <text x="200" y="50" text-anchor="middle" font-size="16" fill="#333" font-weight="bold">Casa Acogedora</text>
+        </svg>`
+      },
+      {
+        level: 5,
+        name: 'Jardín Pequeño',
+        svg: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="180" y="220" fill="#90ee90"/>
+          <rect x="80" y="260" width="240" height="60" fill="#555"/>
+          <rect x="80" y="140" width="240" height="120" fill="#ffebcd" stroke="#666" stroke-width="4"/>
+          <polygon points="80,140 200,80 320,140" fill="#c41e3a" stroke="#8b0000" stroke-width="4"/>
+          <rect x="110" y="170" width="50" height="50" fill="#add8e6" stroke="#333" stroke-width="3"/>
+          <rect x="240" y="170" width="50" height="50" fill="#add8e6" stroke="#333" stroke-width="3"/>
+          <line x1="135" y1="170" x2="135" y2="220" stroke="#333" stroke-width="2"/>
+          <line x1="110" y1="195" x2="160" y2="195" stroke="#333" stroke-width="2"/>
+          <line x1="265" y1="170" x2="265" y2="220" stroke="#333" stroke-width="2"/>
+          <line x1="240" y1="195" x2="290" y2="195" stroke="#333" stroke-width="2"/>
+          <rect x="175" y="200" width="50" height="60" fill="#8b4513" stroke="#5a2d0c" stroke-width="3"/>
+          <circle cx="215" cy="230" r="4" fill="#ffd700"/>
+          <circle cx="40" cy="310" r="18" fill="#ff69b4"/>
+          <line x1="40" y1="310" x2="40" y2="340" stroke="#228b22" stroke-width="3"/>
+          <circle cx="360" cy="300" r="18" fill="#ffb6c1"/>
+          <line x1="360" y1="300" x2="360" y2="330" stroke="#228b22" stroke-width="3"/>
+          <path d="M 120 330 Q 200 310 280 330" stroke="#8b7355" stroke-width="3" fill="none"/>
+          <text x="200" y="50" text-anchor="middle" font-size="16" fill="#333" font-weight="bold">Hogar Floreciente</text>
+        </svg>`
+      },
+      {
+        level: 6,
+        name: 'Casa Completa',
+        svg: `<svg viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+          <rect width="400" height="180" y="220" fill="#90ee90"/>
+          <rect x="60" y="250" width="280" height="70" fill="#555"/>
+          <rect x="60" y="130" width="280" height="120" fill="#ffd700" stroke="#666" stroke-width="4"/>
+          <polygon points="60,130 200,60 340,130" fill="#dc143c" stroke="#8b0000" stroke-width="4"/>
+          <rect x="90" y="160" width="60" height="60" fill="#b0e0e6" stroke="#333" stroke-width="3"/>
+          <rect x="250" y="160" width="60" height="60" fill="#b0e0e6" stroke="#333" stroke-width="3"/>
+          <line x1="120" y1="160" x2="120" y2="220" stroke="#333" stroke-width="2"/>
+          <line x1="90" y1="190" x2="150" y2="190" stroke="#333" stroke-width="2"/>
+          <line x1="280" y1="160" x2="280" y2="220" stroke="#333" stroke-width="2"/>
+          <line x1="250" y1="190" x2="310" y2="190" stroke="#333" stroke-width="2"/>
+          <rect x="165" y="190" width="70" height="60" fill="#8b4513" stroke="#5a2d0c" stroke-width="4"/>
+          <circle cx="220" cy="220" r="5" fill="#ffd700"/>
+          <circle cx="25" cy="310" r="22" fill="#ff1493"/>
+          <line x1="25" y1="310" x2="25" y2="350" stroke="#228b22" stroke-width="4"/>
+          <circle cx="375" cy="300" r="22" fill="#ff69b4"/>
+          <line x1="375" y1="300" x2="375" y2="340" stroke="#228b22" stroke-width="4"/>
+          <circle cx="60" cy="290" r="18" fill="#ffb6c1"/>
+          <line x1="60" y1="290" x2="60" y2="325" stroke="#228b22" stroke-width="3"/>
+          <circle cx="340" cy="320" r="18" fill="#ffc0cb"/>
+          <line x1="340" y1="320" x2="340" y2="355" stroke="#228b22" stroke-width="3"/>
+          <path d="M 100 340 Q 200 315 300 340" stroke="#8b7355" stroke-width="4" fill="none"/>
+          <circle cx="200" cy="80" r="10" fill="#ffff00" opacity="0.8"/>
+          <text x="200" y="35" text-anchor="middle" font-size="18" fill="#333" font-weight="bold">✨ Hogar Próspero ✨</text>
+        </svg>`
+      }
+    ];
+
+    let currentLevel = 0;
+    let totalEntries = 0;
+
+    // ==========================================
+    // INICIALIZACIÓN
+    // ==========================================
+    window.addEventListener('DOMContentLoaded', () => {
+      initializeHouse();
+      loadHistory();
+      setupEventListeners();
+    });
+
+    function initializeHouse() {
+      const display = document.getElementById('houseDisplay');
+      houseStates.forEach((state, index) => {
+        const div = document.createElement('div');
+        div.className = `house-state ${index === 0 ? 'active' : ''}`;
+        div.innerHTML = state.svg;
+        div.dataset.level = index;
+        display.appendChild(div);
+      });
+      updateHouseInfo();
+    }
+
+    function updateHouseInfo() {
+      const badge = document.getElementById('houseLevelBadge');
+      const statLevel = document.getElementById('statLevel');
+      const statEntries = document.getElementById('statEntries');
+      const statStatus = document.getElementById('statStatus');
+
+      badge.textContent = `🏗️ Nivel ${currentLevel}: ${houseStates[currentLevel].name}`;
+      statLevel.textContent = currentLevel;
+      statEntries.textContent = totalEntries;
+      
+      if (currentLevel === 0) {
+        statStatus.textContent = 'Terreno Listo';
+      } else if (currentLevel < 3) {
+        statStatus.textContent = 'En Construcción';
+      } else if (currentLevel < 6) {
+        statStatus.textContent = 'Habitada';
+      } else {
+        statStatus.textContent = 'Próspera';
+      }
+    }
+
+    function transitionHouseLevel(newLevel) {
+      const allStates = document.querySelectorAll('.house-state');
+      allStates.forEach(state => state.classList.remove('active'));
+      allStates[newLevel].classList.add('active');
+      currentLevel = newLevel;
+      updateHouseInfo();
+    }
+
+    // ==========================================
+    // EVENT LISTENERS
+    // ==========================================
+    function setupEventListeners() {
+      // Abrir modal del arquitecto
+      document.getElementById('talkToArchitectBtn').addEventListener('click', () => {
+        document.getElementById('architectModal').classList.add('active');
+      });
+
+      // Cerrar modal del arquitecto
+      document.getElementById('closeArchitectModal').addEventListener('click', () => {
+        document.getElementById('architectModal').classList.remove('active');
+      });
+
+      // Abrir modal de historial
+      document.getElementById('viewHistoryBtn').addEventListener('click', () => {
+        document.getElementById('historyModal').classList.add('active');
+        loadHistory();
+      });
+
+      // Cerrar modal de historial
+      document.getElementById('closeHistoryModal').addEventListener('click', () => {
+        document.getElementById('historyModal').classList.remove('active');
+      });
+
+      // Cerrar modales al hacer clic fuera
+      document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', (e) => {
+          if (e.target === overlay) {
+            overlay.classList.remove('active');
+          }
+        });
+      });
+
+      // Manejar envío del formulario
+      document.getElementById('entryForm').addEventListener('submit', handleSubmit);
+    }
+
+    // ==========================================
+    // ENVÍO DE ENTRADA
+    // ==========================================
+    async function handleSubmit(e) {
+      e.preventDefault();
+
+      const textInput = document.getElementById('entryText');
+      const submitBtn = document.getElementById('submitBtn');
+      const texto = textInput.value.trim();
+
+      if (!texto) {
+        alert('Por favor escribe algo antes de enviar.');
+        return;
+      }
+
+      // Deshabilitar botón y mostrar loading
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Consultando al Arquitecto <span class="loading-spinner"></span>';
+
+      try {
+        const response = await fetch(`${API_URL}/api/entry`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            texto_entrada: texto
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Error del servidor: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Actualizar la casa visualmente
+        updateHouseVisual(data.accion_visual_sugerida);
+
+        // Mostrar notificación
+        showNotification(data.insight_arquitecto);
+
+        // Incrementar contador
+        totalEntries++;
+        updateHouseInfo();
+
+        // Limpiar y cerrar
+        textInput.value = '';
+        setTimeout(() => {
+          document.getElementById('architectModal').classList.remove('active');
+        }, 500);
+
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Error al conectar con el Arquitecto. Asegúrate de que el servidor esté corriendo en ' + API_URL);
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Registrar Aporte';
+      }
+    }
+
+    // ==========================================
+    // ACTUALIZACIÓN VISUAL
+    // ==========================================
+    function updateHouseVisual(accion) {
+      const accionesPositivas = [
+        'construir_cimiento',
+        'construir_pared',
+        'construir_techo',
+        'pintar_pared',
+        'añadir_ventana',
+        'plantar_flor',
+        'añadir_luz',
+        'expandir_casa'
+      ];
+
+      if (accionesPositivas.includes(accion)) {
+        // Subir nivel (máximo 6)
+        if (currentLevel < houseStates.length - 1) {
+          transitionHouseLevel(currentLevel + 1);
+        }
+      } else {
+        // Acciones negativas: no cambiamos nivel visual aquí
+        // En una versión completa, superpondrías elementos de daño
+        console.log('Acción negativa detectada:', accion);
+      }
+    }
+
+    // ==========================================
+    // NOTIFICACIONES
+    // ==========================================
+    function showNotification(text) {
+      const notification = document.getElementById('notification');
+      const notificationText = document.getElementById('notificationText');
+      
+      notificationText.textContent = text;
+      notification.classList.add('show');
+
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 5000);
+    }
+
+    // ==========================================
+    // CARGAR HISTORIAL
+    // ==========================================
+    async function loadHistory() {
+      const container = document.getElementById('historyEntries');
+
+      try {
+        const response = await fetch(`${API_URL}/api/entries`);
+        if (!response.ok) {
+          throw new Error('Error al cargar historial');
+        }
+
+        const entries = await response.json();
+
+        if (entries.length === 0) {
+          container.innerHTML = `
+            <div class="empty-history">
+              El libro está vacío. Comienza a registrar tus aportes para ver tu historial de construcción.
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = '';
+        
+        // Mostrar en orden inverso (más reciente primero)
+        entries.reverse().forEach(entry => {
+          addHistoryEntry(entry);
+        });
+
+        // Calcular nivel actual basado en entradas positivas
+        const positiveCount = entries.filter(e => 
+          e.magnitud_impacto && e.magnitud_impacto.includes('positiva')
+        ).length;
+        
+        const calculatedLevel = Math.min(6, Math.floor(positiveCount / 2));
+        if (calculatedLevel !== currentLevel) {
+          transitionHouseLevel(calculatedLevel);
+        }
+
+        totalEntries = entries.length;
+        updateHouseInfo();
+
+      } catch (error) {
+        console.error('Error cargando historial:', error);
+        container.innerHTML = `
+          <div class="empty-history">
+            Error al cargar el historial. Verifica que el servidor esté corriendo.
+          </div>
+        `;
+      }
+    }
+
+    function addHistoryEntry(entry) {
+      const container = document.getElementById('historyEntries');
+
+      const pillarEmojis = {
+        'Comunicación': '💬',
+        'Confianza': '🤝',
+        'Respeto': '🙏',
+        'Intimidad': '❤️',
+        'Compromiso': '🔒'
+      };
+
+      const entryDiv = document.createElement('div');
+      entryDiv.className = 'history-entry';
+
+      const date = new Date(entry.timestamp);
+      const dateStr = date.toLocaleDateString('es-ES', {
+        day: 'numeric',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+
+      const pillar = entry.pilar_detectado || 'Desconocido';
+      const emoji = pillarEmojis[pillar] || '📝';
+
+      entryDiv.innerHTML = `
+        <div class="history-header">
+          <span class="history-date">${dateStr}</span>
+          <span class="history-pillar">${emoji} ${pillar}</span>
+        </div>
+        <div class="history-text">"${entry.texto_entrada}"</div>
+        <div class="architect-note">
+          <div class="architect-note-label">
+            <span>🏛️</span>
+            <span>El Arquitecto:</span>
+          </div>
+          <div class="architect-note-text">${entry.insight_arquitecto}</div>
+        </div>
+      `;
+
+      container.appendChild(entryDiv);
+    }
+  </script>
+</body>
+</html>

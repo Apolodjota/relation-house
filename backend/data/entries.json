@@ -1,0 +1,18 @@
+[
+  {
+    "timestamp": "2025-10-23T00:22:03.707808",
+    "texto_entrada": "le he hecho una fiesta sorpresa por su cumple",
+    "pilar_detectado": "Compromiso",
+    "magnitud_impacto": "positiva_media",
+    "insight_arquitecto": "He registrado tu aporte. Cada experiencia, buena o mala, es parte de la construcción de tu relación.",
+    "accion_visual_sugerida": "construir_techo"
+  },
+  {
+    "timestamp": "2025-10-23T00:26:45.944096",
+    "texto_entrada": "le hice el amor con mucho cariño",
+    "pilar_detectado": "Compromiso",
+    "magnitud_impacto": "positiva_media",
+    "insight_arquitecto": "He registrado tu aporte. Cada experiencia, buena o mala, es parte de la construcción de tu relación.",
+    "accion_visual_sugerida": "construir_techo"
+  }
+]
