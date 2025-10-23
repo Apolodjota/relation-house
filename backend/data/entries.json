@@ -1,12 +1,12 @@
 [
   {
-    "timestamp": "2025-10-23T03:33:41.581966",
-    "texto_entrada": "hable con mi novia para que salgamos mas y nos tomemos mas fotos",
-    "pilar_detectado": "Intimidad",
+    "timestamp": "2025-10-23T08:11:26.256599",
+    "texto_entrada": "le comente que me hacia sentir inseguro su amigo gey que se sabe la alineacion de la brasil 1998",
+    "pilar_detectado": "Confianza",
     "magnitud_impacto": "positiva_media",
     "es_constructivo": true,
-    "insight_arquitecto": "Han encendido una luz cálida que ilumina los rincones más personales de su relación.",
-    "consejo_profesional": "La intimidad va más allá de lo físico; incluye vulnerabilidad emocional compartida. Dediquen tiempo a conexiones cotidianas significativas. A veces una mirada sincera vale más que grandes gestos.",
-    "accion_visual_sugerida": "añadir_luz"
+    "insight_arquitecto": "La confianza es el cimiento sobre el que se edifican las relaciones duraderas.",
+    "consejo_profesional": "La confianza se construye con consistencia en palabras y acciones. Sé transparente sobre tus sentimientos y preocupaciones. Si hay dudas, abórdalas directamente en vez de dejar que crezcan.",
+    "accion_visual_sugerida": "construir_cimiento"
   }
 ]
