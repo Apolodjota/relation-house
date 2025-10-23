@@ -18,7 +18,7 @@ CORS(app)  # Habilitar CORS para permitir peticiones desde el frontend
 # ==========================================
 DATA_FILE = 'data/entries.json'
 GEMINI_API_KEY = os.environ.get('AIzaSyB0dTWRCRrwzfhFOERaYsUS4i3eK596GfI', 'TU_API_KEY_AQUI')
-GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent'
+GEMINI_API_URL = 'https://aistudio.google.com/app/projects?projectFilter=gen-lang-client-0471055519'
 
 # System Prompt para Gemini
 SYSTEM_PROMPT = """
@@ -169,7 +169,7 @@ def call_gemini_api(texto_entrada):
         "contents": [
             {
                 "parts": [
-                    {"text": SYSTEM_PROMPT},
+                    {"text": SYSTEM_PROMPT}, 
                     {"text": user_message}
                 ]
             }
